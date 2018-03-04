@@ -1,6 +1,6 @@
 # AWS Lambda
 
-## Key notes
+### Key notes
 
 ---
 
@@ -8,25 +8,43 @@
 
 ---
 
-## What is Lambda
+### What is Lambda
 
 - Serverless from Amazon |
-- Lets you run the code  in a "stateless" style |
+- Lets you run the code written in a "stateless" style |
 - Amazon manages the infrastructure on your behalf |
 - Code is written in .NET Core, NodeJs, Java, Python or Go |
 
-In the most basic form it is just a single class (C#) or a single function (NodeJs). It can also be the whole application with external libraries as long as it fits into constraints
-that serves as an entry point that runs in response to certain events. 
+---
+
+### What can you do with Lambda
+
+In the most basic form lambda is just a single class (C#) or a single function (NodeJs). It can also be an application with external libraries as long as it fits into constraints (up to 50 MB, no more than 5 minutes).
+
+You can invoke Lambda function in response to http events or based on custom schedule. You can not use the lambda for long-running processes, such as video encoding or streaming
 
 ---
 
-## What is alternative
+### What is alternative
+
+- Azure Functions
+- Google Cloud Functions
+- IBM OpenWhisk Actions
+- WebTasks
 
 ---
 
 ## What is pricing model
 
-AWS Lambda is metered in increments of 100 milliseconds
+The price depends on the amount of requests per month and compute time.
+
+The compute time implies the amount of memory you allocate to  your function and the duration of lambda function execution.
+
+You are charged for the total number of requests, $0.20 per 1M requests.
+
+Duration is metered in increments of 100 milliseconds, rounded up to the nearest 100ms. Price depends on amount of memory allocated for function, e.g. $0.000000208 for 100ms with 128MB RAM and $0.000001667 with 1GB RAM
+
+Free tier icludes 1M requests and 400,000 GB-SECONDS (400,000ms with 1Gb RAM)
 
 ---
 
@@ -34,7 +52,11 @@ AWS Lambda is metered in increments of 100 milliseconds
 
 ---
 
-## Who is using lambda
+### Who is using lambda
+
+- Netflix
+- National Geographic
+- Expedia
 
 ---
 
@@ -42,19 +64,98 @@ AWS Lambda is metered in increments of 100 milliseconds
 
 ---
 
-## How it looks
+### How to create lambda
+
+![alt](images/create-lambda.png)
 
 ---
 
-## How it works
+### How to manage lambda
+
+![alt](images/view-lambda.png)
 
 ---
 
-## How to deploy
+### How it looks in NodeJs
+
+```javascript
+'use strict';
+
+module.exports.handler = (event, context, callback) => {
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: `Hello, the current time is ${new Date().toTimeString()}.`,
+    })
+  };
+
+  //signal success
+  callback(null, response);
+
+  //signal failure
+  callback(`Failed to process request ${event}`);
+};
+```
+
+@[2,3](Lambda function handler.)
+@[4,12](Lambda returns success response (statusCode and body are mandatory.)
+@[14,15](Lambda returns failure response. The resulting statusCode will be 502)
 
 ---
 
-## How to troubleshoot
+### How it looks in .NET
+
+```csharp
+using Amazon.Lambda.Core;
+using System;
+
+[assembly:LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
+
+namespace SampleLambdaFunction
+{
+    public class Handler
+    {
+       public Response Handle(Request request)
+       {
+          // do something
+          return new Response("Your function executed successfully!");
+       }
+    }
+
+    public class Request
+    {
+      public string Key1 {get; set;}
+
+      public Request(string key1){
+        Key1 = key1;
+      }
+    }
+
+    public class Response
+    {
+      public string Message {get; set;}
+
+      public Response(string message){
+        Message = message;
+      }
+    }
+}
+```
+
+@[4,5](For any input or output types other than a Stream object, you will need to specify a serializer.)
+@[8,16](Lambda function in form of class.)
+
+---
+
+### How it works
+
+---
+
+### How to deploy
+
+---
+
+### How to troubleshoot
 
 ---
 
@@ -72,51 +173,5 @@ AWS Lambda is metered in increments of 100 milliseconds
 ## External references
 
 - https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
-- 
-
----
-
-
-@title[JavaScript Block]
-
-<p><span class="slide-title">JavaScript Block</span></p>
-
-```javascript
-// Include http module.
-var http = require("http");
-
-// Create the server. Function passed as parameter
-// is called on every request made.
-http.createServer(function (request, response) {
-  // Attach listener on end event.  This event is
-  // called when client sent, awaiting response.
-  request.on("end", function () {
-    // Write headers to the response.
-    // HTTP 200 status, Content-Type text/plain.
-    response.writeHead(200, {
-      'Content-Type': 'text/plain'
-    });
-    // Send data and end response.
-    response.end('Hello HTTP!');
-  });
-
-// Listen on the 8080 port.
-}).listen(8080);
-```
-
-@[1,2](You can present code inlined within your slide markdown too.)
-@[9-17](Displayed using code-syntax highlighting just like your IDE.)
-@[19-20](Again, all of this without ever leaving your slideshow.)
-
----
-
-## Template Help
-
-- [Code Presenting](https://github.com/gitpitch/gitpitch/wiki/Code-Presenting)
-  + [Repo Source](https://github.com/gitpitch/gitpitch/wiki/Code-Delimiter-Slides), [Static Blocks](https://github.com/gitpitch/gitpitch/wiki/Code-Slides), [GIST](https://github.com/gitpitch/gitpitch/wiki/GIST-Slides) 
-- [Custom CSS Styling](https://github.com/gitpitch/gitpitch/wiki/Slideshow-Custom-CSS)
-- [Slideshow Background Image](https://github.com/gitpitch/gitpitch/wiki/Background-Setting)
-- [Slide-specific Background Images](https://github.com/gitpitch/gitpitch/wiki/Image-Slides#background)
-- [Custom Logo](https://github.com/gitpitch/gitpitch/wiki/Logo-Setting) [TOC](https://github.com/gitpitch/gitpitch/wiki/Table-of-Contents) [Footnotes](https://github.com/gitpitch/gitpitch/wiki/Footnote-Setting)
 
 ---
