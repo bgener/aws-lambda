@@ -19,9 +19,10 @@
 
 ### What can you do with Lambda
 
-In the most basic form lambda is just a single class (C#) or a single function (NodeJs). It can also be an application with external libraries as long as it fits into constraints (up to 50 MB, no more than 5 minutes).
-
-You can invoke Lambda function in response to http events or based on custom schedule. You can not use the lambda for long-running processes, such as video encoding or streaming
+- In the most basic form lambda is just a single class (C#) or a single function (NodeJs)
+- It can be a standalone application with external libraries as long as it fits into constraints (up to 50 MB, no more than 5 minutes)
+- You can invoke Lambda function in response to http events or based on custom schedule
+- You can not use the lambda for long-running processes, such as video encoding or streaming
 
 ---
 
@@ -36,15 +37,11 @@ You can invoke Lambda function in response to http events or based on custom sch
 
 ## What is pricing model
 
-The price depends on the amount of requests per month and compute time.
-
-The compute time implies the amount of memory you allocate to  your function and the duration of lambda function execution.
-
-You are charged for the total number of requests, $0.20 per 1M requests.
-
-Duration is metered in increments of 100 milliseconds, rounded up to the nearest 100ms. Price depends on amount of memory allocated for function, e.g. $0.000000208 for 100ms with 128MB RAM and $0.000001667 with 1GB RAM
-
-Free tier icludes 1M requests and 400,000 GB-SECONDS (400,000ms with 1Gb RAM)
+- The price depends on the amount of requests per month and compute time
+- The compute time implies the amount of memory you allocate to  your function and the duration of lambda function execution
+- You are charged for the total number of requests, $0.20 per 1M requests
+- Duration is rounded up to the nearest 100ms. Price depends on amount of RAM allocated for function, e.g. $0.000000208 per 100ms with 128MB RAM and $0.000001667 with 1GB RAM
+- Free tier icludes 1M requests and 400,000 GB-SECONDS (400,000ms with 1Gb RAM)
 
 ---
 
