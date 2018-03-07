@@ -1,14 +1,16 @@
 # AWS Lambda
 
-### Key notes
-
 ---
 
 ## What
 
+![alt](images/what.jpg = 350px)
+
 ---
 
 ### What is Lambda
+
+<br>
 
 - Serverless from Amazon |
 - Lets you run the code written in a "stateless" style |
@@ -19,6 +21,8 @@
 
 ### What can you do with Lambda
 
+<br>
+
 - In the most basic form lambda is just a single class (C#) or a single function (NodeJs)
 - It can be a standalone application with external libraries as long as it fits into constraints (up to 50 MB, no more than 5 minutes)
 - You can invoke Lambda function in response to http events or based on custom schedule
@@ -28,6 +32,8 @@
 
 ### What is alternative
 
+<br>
+
 - Azure Functions
 - Google Cloud Functions
 - IBM OpenWhisk Actions
@@ -35,12 +41,18 @@
 
 ---
 
-## What is pricing model
+### What is pricing model
 
-- The price depends on the amount of requests per month and compute time
-- The compute time implies the amount of memory you allocate to  your function and the duration of lambda function execution
-- You are charged for the total number of requests, $0.20 per 1M requests
-- Duration is rounded up to the nearest 100ms. Price depends on amount of RAM allocated for function, e.g. $0.000000208 per 100ms with 128MB RAM and $0.000001667 with 1GB RAM
+<br>
+
+| charges | Unit | Price | Notes |
+| ---- | :------: | :--------: | :--------: |
+| Number of requests | 1M | $0.20 | |
+| Compute time | 100ms |  $0.000000208 | 128MB RAM |
+| Compute time | 100ms |  $0.000001667 | 1GB RAM |
+| Storage | 1GB |  $0.023 | |
+
+- Duration is rounded up to the nearest 100ms
 - Free tier icludes 1M requests and 400,000 GB-SECONDS (400,000ms with 1Gb RAM)
 
 ---
@@ -50,6 +62,8 @@
 ---
 
 ### Who is using lambda
+
+<br>
 
 - Netflix
 - National Geographic
@@ -94,9 +108,9 @@ module.exports.handler = (event, context, callback) => {
 };
 ```
 
-@[2,3](Lambda function handler.)
-@[4,12](Lambda returns success response (statusCode and body are mandatory.)
-@[14,15](Lambda returns failure response. The resulting statusCode will be 502)
+@[2-3](Lambda function handler.)
+@[4-12](Lambda returns success response (statusCode and body are mandatory.)
+@[14-15](Lambda returns failure response. The resulting statusCode will be 502)
 
 ---
 
